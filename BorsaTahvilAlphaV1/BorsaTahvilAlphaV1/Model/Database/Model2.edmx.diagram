@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="101c122f08d143d9963c4c3cdb15ef80" Name="Diagram1" ZoomLevel="93">
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.tblBotBilgi" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.tblKrediKarti" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.tblKullanici" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.tblMakale" Width="1.5" PointX="0.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.tblManuelIslem" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.tblPost" Width="1.5" PointX="2.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.tblYetki" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="DbBorsaTahvilModel1.FK_tblBotBilgi_tblKullanici" ManuallyRouted="false" />
+        <AssociationConnector Association="DbBorsaTahvilModel1.FK_tblKullanici_tblKrediKarti" ManuallyRouted="false" />
+        <AssociationConnector Association="DbBorsaTahvilModel1.FK_tblKullanici_tblYetki" ManuallyRouted="false" />
+        <AssociationConnector Association="DbBorsaTahvilModel1.FK_tblManuelIslem_tblKullanici" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.CryptoPara" Width="1.5" PointX="6.75" PointY="8.25" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.KriptoSatimİslem" Width="1.5" PointX="9" PointY="5.375" />
+        <AssociationConnector Association="DbBorsaTahvilModel1.FK_KriptoSatimİslem_CryptoPara" />
+        <AssociationConnector Association="DbBorsaTahvilModel1.FK_KriptoSatimİslem_tblKullanici" />
+        <EntityTypeShape EntityType="DbBorsaTahvilModel1.tblDestek" Width="1.5" PointX="7.375" PointY="0.75" />
+        <AssociationConnector Association="DbBorsaTahvilModel1.FK_tblPost_tblKullanici" />
+        <AssociationConnector Association="DbBorsaTahvilModel1.FK_tblDestek_tblKullanici" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

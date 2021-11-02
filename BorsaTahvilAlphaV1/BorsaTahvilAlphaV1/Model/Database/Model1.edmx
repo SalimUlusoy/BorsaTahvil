@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DbBorsaTahvilModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblBotBilgi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BotIslem" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BotIslemTarihi" Type="datetime" Nullable="false" />
+          <Property Name="KullaniciId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblKrediKarti">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KrediKartiNumara" Type="char" MaxLength="16" Nullable="false" />
+          <Property Name="KartUstundekiIsim" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KartAy" Type="char" MaxLength="2" Nullable="false" />
+          <Property Name="KartYil" Type="char" MaxLength="4" Nullable="false" />
+          <Property Name="KartCVC" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblKullanici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KullaniciSoyadi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KullaniciEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KullaniciNickName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="KullaniciParola" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="YasakliKullanicilar" Type="bit" />
+          <Property Name="KullaniciCuzdanPara" Type="money" />
+          <Property Name="KrediKartId" Type="int" />
+          <Property Name="Yetki" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblManuelIslem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IslemIsim" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AlinanMiktar" Type="int" Nullable="false" />
+          <Property Name="KullaniciId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblYetki">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YetkiIsim" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Durum" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblBotBilgi_tblKullanici">
+          <End Role="tblKullanici" Type="Self.tblKullanici" Multiplicity="1" />
+          <End Role="tblBotBilgi" Type="Self.tblBotBilgi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKullanici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBotBilgi">
+              <PropertyRef Name="KullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblKullanici_tblKrediKarti">
+          <End Role="tblKrediKarti" Type="Self.tblKrediKarti" Multiplicity="0..1" />
+          <End Role="tblKullanici" Type="Self.tblKullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKrediKarti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblKullanici">
+              <PropertyRef Name="KrediKartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblKullanici_tblYetki">
+          <End Role="tblYetki" Type="Self.tblYetki" Multiplicity="1" />
+          <End Role="tblKullanici" Type="Self.tblKullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblYetki">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblKullanici">
+              <PropertyRef Name="Yetki" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblManuelIslem_tblKullanici">
+          <End Role="tblKullanici" Type="Self.tblKullanici" Multiplicity="1" />
+          <End Role="tblManuelIslem" Type="Self.tblManuelIslem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKullanici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblManuelIslem">
+              <PropertyRef Name="KullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbBorsaTahvilModelStoreContainer">
+          <EntitySet Name="tblBotBilgi" EntityType="Self.tblBotBilgi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblKrediKarti" EntityType="Self.tblKrediKarti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblKullanici" EntityType="Self.tblKullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblManuelIslem" EntityType="Self.tblManuelIslem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblYetki" EntityType="Self.tblYetki" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblBotBilgi_tblKullanici" Association="Self.FK_tblBotBilgi_tblKullanici">
+            <End Role="tblKullanici" EntitySet="tblKullanici" />
+            <End Role="tblBotBilgi" EntitySet="tblBotBilgi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblKullanici_tblKrediKarti" Association="Self.FK_tblKullanici_tblKrediKarti">
+            <End Role="tblKrediKarti" EntitySet="tblKrediKarti" />
+            <End Role="tblKullanici" EntitySet="tblKullanici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblKullanici_tblYetki" Association="Self.FK_tblKullanici_tblYetki">
+            <End Role="tblYetki" EntitySet="tblYetki" />
+            <End Role="tblKullanici" EntitySet="tblKullanici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblManuelIslem_tblKullanici" Association="Self.FK_tblManuelIslem_tblKullanici">
+            <End Role="tblKullanici" EntitySet="tblKullanici" />
+            <End Role="tblManuelIslem" EntitySet="tblManuelIslem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DbBorsaTahvilModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblBotBilgi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BotIslem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BotIslemTarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="KullaniciId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblKullanici" Relationship="Self.FK_tblBotBilgi_tblKullanici" FromRole="tblBotBilgi" ToRole="tblKullanici" />
+        </EntityType>
+        <EntityType Name="tblKrediKarti">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KrediKartiNumara" Type="String" MaxLength="16" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="KartUstundekiIsim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KartAy" Type="String" MaxLength="2" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="KartYil" Type="String" MaxLength="4" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="KartCVC" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="tblKullanici" Relationship="Self.FK_tblKullanici_tblKrediKarti" FromRole="tblKrediKarti" ToRole="tblKullanici" />
+        </EntityType>
+        <EntityType Name="tblKullanici">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KullaniciSoyadi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KullaniciEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KullaniciNickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="KullaniciParola" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="YasakliKullanicilar" Type="Boolean" />
+          <Property Name="KullaniciCuzdanPara" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="KrediKartId" Type="Int32" />
+          <Property Name="Yetki" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblBotBilgi" Relationship="Self.FK_tblBotBilgi_tblKullanici" FromRole="tblKullanici" ToRole="tblBotBilgi" />
+          <NavigationProperty Name="tblKrediKarti" Relationship="Self.FK_tblKullanici_tblKrediKarti" FromRole="tblKullanici" ToRole="tblKrediKarti" />
+          <NavigationProperty Name="tblYetki" Relationship="Self.FK_tblKullanici_tblYetki" FromRole="tblKullanici" ToRole="tblYetki" />
+          <NavigationProperty Name="tblManuelIslem" Relationship="Self.FK_tblManuelIslem_tblKullanici" FromRole="tblKullanici" ToRole="tblManuelIslem" />
+        </EntityType>
+        <EntityType Name="tblManuelIslem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IslemIsim" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="AlinanMiktar" Type="Int32" Nullable="false" />
+          <Property Name="KullaniciId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblKullanici" Relationship="Self.FK_tblManuelIslem_tblKullanici" FromRole="tblManuelIslem" ToRole="tblKullanici" />
+        </EntityType>
+        <EntityType Name="tblYetki">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YetkiIsim" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Durum" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tblKullanici" Relationship="Self.FK_tblKullanici_tblYetki" FromRole="tblYetki" ToRole="tblKullanici" />
+        </EntityType>
+        <Association Name="FK_tblBotBilgi_tblKullanici">
+          <End Role="tblKullanici" Type="Self.tblKullanici" Multiplicity="1" />
+          <End Role="tblBotBilgi" Type="Self.tblBotBilgi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKullanici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblBotBilgi">
+              <PropertyRef Name="KullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblKullanici_tblKrediKarti">
+          <End Role="tblKrediKarti" Type="Self.tblKrediKarti" Multiplicity="0..1" />
+          <End Role="tblKullanici" Type="Self.tblKullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKrediKarti">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblKullanici">
+              <PropertyRef Name="KrediKartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblKullanici_tblYetki">
+          <End Role="tblYetki" Type="Self.tblYetki" Multiplicity="1" />
+          <End Role="tblKullanici" Type="Self.tblKullanici" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblYetki">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblKullanici">
+              <PropertyRef Name="Yetki" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblManuelIslem_tblKullanici">
+          <End Role="tblKullanici" Type="Self.tblKullanici" Multiplicity="1" />
+          <End Role="tblManuelIslem" Type="Self.tblManuelIslem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblKullanici">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tblManuelIslem">
+              <PropertyRef Name="KullaniciId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DbBorsaTahvilEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblBotBilgi" EntityType="Self.tblBotBilgi" />
+          <EntitySet Name="tblKrediKarti" EntityType="Self.tblKrediKarti" />
+          <EntitySet Name="tblKullanici" EntityType="Self.tblKullanici" />
+          <EntitySet Name="tblManuelIslem" EntityType="Self.tblManuelIslem" />
+          <EntitySet Name="tblYetki" EntityType="Self.tblYetki" />
+          <AssociationSet Name="FK_tblBotBilgi_tblKullanici" Association="Self.FK_tblBotBilgi_tblKullanici">
+            <End Role="tblKullanici" EntitySet="tblKullanici" />
+            <End Role="tblBotBilgi" EntitySet="tblBotBilgi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblKullanici_tblKrediKarti" Association="Self.FK_tblKullanici_tblKrediKarti">
+            <End Role="tblKrediKarti" EntitySet="tblKrediKarti" />
+            <End Role="tblKullanici" EntitySet="tblKullanici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblKullanici_tblYetki" Association="Self.FK_tblKullanici_tblYetki">
+            <End Role="tblYetki" EntitySet="tblYetki" />
+            <End Role="tblKullanici" EntitySet="tblKullanici" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblManuelIslem_tblKullanici" Association="Self.FK_tblManuelIslem_tblKullanici">
+            <End Role="tblKullanici" EntitySet="tblKullanici" />
+            <End Role="tblManuelIslem" EntitySet="tblManuelIslem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DbBorsaTahvilModelStoreContainer" CdmEntityContainer="DbBorsaTahvilEntities">
+          <EntitySetMapping Name="tblBotBilgi">
+            <EntityTypeMapping TypeName="DbBorsaTahvilModel.tblBotBilgi">
+              <MappingFragment StoreEntitySet="tblBotBilgi">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="BotIslem" ColumnName="BotIslem" />
+                <ScalarProperty Name="BotIslemTarihi" ColumnName="BotIslemTarihi" />
+                <ScalarProperty Name="KullaniciId" ColumnName="KullaniciId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblKrediKarti">
+            <EntityTypeMapping TypeName="DbBorsaTahvilModel.tblKrediKarti">
+              <MappingFragment StoreEntitySet="tblKrediKarti">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KrediKartiNumara" ColumnName="KrediKartiNumara" />
+                <ScalarProperty Name="KartUstundekiIsim" ColumnName="KartUstundekiIsim" />
+                <ScalarProperty Name="KartAy" ColumnName="KartAy" />
+                <ScalarProperty Name="KartYil" ColumnName="KartYil" />
+                <ScalarProperty Name="KartCVC" ColumnName="KartCVC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblKullanici">
+            <EntityTypeMapping TypeName="DbBorsaTahvilModel.tblKullanici">
+              <MappingFragment StoreEntitySet="tblKullanici">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KullaniciAdi" ColumnName="KullaniciAdi" />
+                <ScalarProperty Name="KullaniciSoyadi" ColumnName="KullaniciSoyadi" />
+                <ScalarProperty Name="KullaniciEmail" ColumnName="KullaniciEmail" />
+                <ScalarProperty Name="KullaniciNickName" ColumnName="KullaniciNickName" />
+                <ScalarProperty Name="KullaniciParola" ColumnName="KullaniciParola" />
+                <ScalarProperty Name="YasakliKullanicilar" ColumnName="YasakliKullanicilar" />
+                <ScalarProperty Name="KullaniciCuzdanPara" ColumnName="KullaniciCuzdanPara" />
+                <ScalarProperty Name="KrediKartId" ColumnName="KrediKartId" />
+                <ScalarProperty Name="Yetki" ColumnName="Yetki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblManuelIslem">
+            <EntityTypeMapping TypeName="DbBorsaTahvilModel.tblManuelIslem">
+              <MappingFragment StoreEntitySet="tblManuelIslem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IslemIsim" ColumnName="IslemIsim" />
+                <ScalarProperty Name="AlinanMiktar" ColumnName="AlinanMiktar" />
+                <ScalarProperty Name="KullaniciId" ColumnName="KullaniciId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblYetki">
+            <EntityTypeMapping TypeName="DbBorsaTahvilModel.tblYetki">
+              <MappingFragment StoreEntitySet="tblYetki">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="YetkiIsim" ColumnName="YetkiIsim" />
+                <ScalarProperty Name="Durum" ColumnName="Durum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
