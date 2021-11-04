@@ -1,6 +1,21 @@
 # BorsaTahvil
 ![logo](https://user-images.githubusercontent.com/60936024/139940561-37cc5c99-f72b-4b68-a2d3-fb59b9db1cfe.jpg)
 
+# Uygulama Hakkında Kısa Bilgi
+Borsa Tahvil Asp.Net yazılım dilinde yazılmış bir web projesidir. 
+Borsa Tahvil kullanıcıların birçok kripto parayı satın alıp, satabileceği bir borsa sitesidir.
+Borsa Tahvil sadece coin alıp satabildiğiniz bir web sitesi değil editörlerin, danışmanların ve kullanıcıların etkileşime girebildiği bir sosyal platform olmayı hedeflemiştir.
+
+# Uygulamanın Anlatım Video Linki
+![video] https://www.youtube.com/watch?v=B4vN5Jsk5CU&t
+
+# Uygulamada Kullanılan Teknolojiler
+[1] [Entity Framework](https://github.com/mono/entityframework)
+
+[2] [Ajax](https://github.com/topics/ajax)
+
+[3] [MsSql](https://github.com/topics/sql)
+
 # Uygulamanın Açık Kaynak Lisansı
 MIT License
 
